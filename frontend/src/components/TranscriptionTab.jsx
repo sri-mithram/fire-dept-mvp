@@ -14,12 +14,44 @@ export default function TranscriptionTab() {
 
   useEffect(() => {
     connectWebSocket()
+    
+    // Auto-start transcription system when component mounts
+    autoStartSystem()
+    
     return () => {
       if (wsRef.current) {
         wsRef.current.close()
       }
     }
   }, [])
+
+  async function autoStartSystem() {
+    try {
+      // Check if system is already running
+      const statusResponse = await fetch(`${API_BASE_URL}/api/v1/system/status`)
+      if (statusResponse.ok) {
+        const status = await statusResponse.json()
+        if (status.is_running) {
+          console.log('Transcription system is already running')
+          return
+        }
+      }
+      
+      // Start the system
+      const startResponse = await fetch(`${API_BASE_URL}/api/v1/system/start`, {
+        method: 'POST'
+      })
+      
+      if (startResponse.ok) {
+        console.log('Transcription system started automatically')
+      } else {
+        console.warn('Failed to auto-start transcription system. You may need to click "Start System" manually.')
+      }
+    } catch (error) {
+      console.warn('Could not auto-start transcription system:', error)
+      // Don't show error to user - they can start manually if needed
+    }
+  }
 
   function connectWebSocket() {
     try {

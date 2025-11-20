@@ -1,10 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './RadioSystemControls.css'
 
 import { API_BASE_URL } from '../config'
 
 export default function RadioSystemControls({ apiUrl = API_BASE_URL }) {
   const [isRunning, setIsRunning] = useState(false)
+
+  // Check system status on mount and periodically
+  useEffect(() => {
+    checkStatus()
+    const interval = setInterval(checkStatus, 5000) // Check every 5 seconds
+    return () => clearInterval(interval)
+  }, [])
+
+  async function checkStatus() {
+    try {
+      const response = await fetch(`${apiUrl}/api/v1/system/status`)
+      if (response.ok) {
+        const data = await response.json()
+        setIsRunning(data.is_running || false)
+      }
+    } catch (error) {
+      // Silently fail - backend might not be running
+    }
+  }
 
   async function startSystem() {
     try {

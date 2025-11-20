@@ -17,35 +17,46 @@ export function loadGoogleMaps() {
     // Check if script is already being loaded
     const existingScript = document.querySelector('script[src*="maps.googleapis.com"]')
     if (existingScript) {
-      existingScript.addEventListener('load', () => {
+      // Wait for it to load
+      const checkInterval = setInterval(() => {
         if (window.google && window.google.maps) {
+          clearInterval(checkInterval)
           resolve(window.google.maps)
-        } else {
+        }
+      }, 100)
+      
+      // Timeout after 10 seconds
+      setTimeout(() => {
+        clearInterval(checkInterval)
+        if (!window.google || !window.google.maps) {
           reject(new Error('Google Maps API failed to load'))
         }
-      })
+      }, 10000)
       return
     }
 
-    // Create and load script
-    const script = document.createElement('script')
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=beta&libraries=places,geometry,streetView&loading=async&callback=initGoogleMaps`
-    script.async = true
-    script.defer = true
+    // Create and load script with callback
+    const callbackName = `initGoogleMaps_${Date.now()}`
     
-    // Set up callback
-    window.initGoogleMaps = () => {
+    // Set up global callback
+    window[callbackName] = () => {
       if (window.google && window.google.maps) {
         resolve(window.google.maps)
       } else {
         reject(new Error('Google Maps API failed to initialize'))
       }
-      delete window.initGoogleMaps
+      delete window[callbackName]
     }
     
+    // Create script
+    const script = document.createElement('script')
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=beta&libraries=places,geometry,streetView&callback=${callbackName}`
+    script.async = true
+    script.defer = true
+    
     script.onerror = () => {
-      reject(new Error('Failed to load Google Maps API script'))
-      delete window.initGoogleMaps
+      reject(new Error('Failed to load Google Maps API script. Check your API key and network connection.'))
+      delete window[callbackName]
     }
     
     document.head.appendChild(script)

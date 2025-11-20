@@ -595,6 +595,8 @@ export default function TrackingTab() {
     cameraRadiusRef.current = Math.min(maxCameraRadiusRef.current, cameraRadiusRef.current + zoomStep)
   }
 
+  const streetViewPanoramaRef = useRef(null)
+
   async function loadStreetView() {
     if (!currentLocation || !currentAddress) return
     
@@ -604,26 +606,70 @@ export default function TrackingTab() {
       
       if (!window.google || !window.google.maps) {
         console.error('Google Maps API not loaded. Please set VITE_GOOGLE_MAPS_API_KEY environment variable.')
+        alert('Google Maps API not loaded. Please set VITE_GOOGLE_MAPS_API_KEY in your .env file.')
         return
       }
       
-      // Initialize Street View
-      const { StreetViewPanorama } = await window.google.maps.importLibrary("streetView")
-      const streetViewContainer = document.getElementById('street-view')
-      
-      if (streetViewContainer && !streetViewContainer.hasChildNodes()) {
-        const location = new window.google.maps.LatLng(currentLocation.lat, currentLocation.lng)
-        const panorama = new StreetViewPanorama(streetViewContainer, {
-          position: location,
-          pov: { heading: 0, pitch: 0 },
-          zoom: 1
-        })
-      }
-      
       setShowStreetView(true)
+      
+      // Wait for DOM to update, then initialize Street View
+      setTimeout(async () => {
+        const streetViewContainer = document.getElementById('street-view')
+        if (!streetViewContainer) {
+          console.error('Street View container not found')
+          return
+        }
+        
+        try {
+          // Import Street View library
+          const { StreetViewPanorama } = await window.google.maps.importLibrary("streetView")
+          
+          const location = new window.google.maps.LatLng(currentLocation.lat, currentLocation.lng)
+          
+          // Check if Street View is available
+          const streetViewService = new window.google.maps.StreetViewService()
+          streetViewService.getPanorama({ location: location, radius: 50 }, (data, status) => {
+            if (status === 'OK') {
+              // Initialize panorama
+              if (!streetViewPanoramaRef.current) {
+                streetViewPanoramaRef.current = new StreetViewPanorama(streetViewContainer, {
+                  position: location,
+                  pov: { heading: 0, pitch: 0 },
+                  zoom: 1
+                })
+              } else {
+                streetViewPanoramaRef.current.setPosition(location)
+              }
+            } else {
+              // Street View not available for this location
+              streetViewContainer.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: rgba(255, 255, 255, 0.7); text-align: center; padding: 20px;">
+                  <div>
+                    <p style="margin: 0; font-size: 16px;">Street View not available for this location</p>
+                    <p style="margin: 10px 0 0 0; font-size: 12px; opacity: 0.6;">Address: ${currentAddress}</p>
+                  </div>
+                </div>
+              `
+            }
+          })
+        } catch (error) {
+          console.error('Error initializing Street View:', error)
+          const streetViewContainer = document.getElementById('street-view')
+          if (streetViewContainer) {
+            streetViewContainer.innerHTML = `
+              <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: rgba(255, 255, 255, 0.7); text-align: center; padding: 20px;">
+                <div>
+                  <p style="margin: 0; font-size: 16px;">Error loading Street View</p>
+                  <p style="margin: 10px 0 0 0; font-size: 12px; opacity: 0.6;">${error.message}</p>
+                </div>
+              </div>
+            `
+          }
+        }
+      }, 100)
     } catch (error) {
       console.error('Error loading Street View:', error)
-      alert('Failed to load Street View. Please check your Google Maps API key.')
+      alert(`Failed to load Street View: ${error.message}\n\nPlease check:\n1. VITE_GOOGLE_MAPS_API_KEY is set in your .env file\n2. The API key has Street View Static API enabled\n3. Your network connection`)
     }
   }
 
