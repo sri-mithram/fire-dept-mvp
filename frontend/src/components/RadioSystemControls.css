@@ -1,0 +1,49 @@
+.radio-system-controls {
+  padding: 20px;
+  background: rgba(0, 200, 0, 0.1);
+  border-radius: 12px;
+  border: 2px solid rgba(0, 200, 0, 0.3);
+  min-width: 200px;
+}
+
+.radio-system-controls h3 {
+  font-size: 18px;
+  color: #00ff00;
+  margin: 0 0 15px 0;
+}
+
+.radio-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.start-btn, .stop-btn {
+  padding: 12px 30px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, rgba(0, 200, 0, 0.3) 0%, rgba(0, 150, 0, 0.4) 100%);
+  border: 2px solid rgba(0, 200, 0, 0.5);
+}
+
+.start-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 200, 0, 0.4) 0%, rgba(0, 150, 0, 0.5) 100%);
+  transform: translateY(-2px);
+}
+
+.stop-btn {
+  background: linear-gradient(135deg, rgba(200, 0, 0, 0.3) 0%, rgba(150, 0, 0, 0.4) 100%);
+  border: 2px solid rgba(200, 0, 0, 0.5);
+}
+
+.stop-btn:hover {
+  background: linear-gradient(135deg, rgba(200, 0, 0, 0.4) 0%, rgba(150, 0, 0, 0.5) 100%);
+  transform: translateY(-2px);
+}
+

@@ -1,0 +1,41 @@
+.nav-bar {
+  background: linear-gradient(135deg, rgba(0, 153, 255, 0.2) 0%, rgba(0, 102, 204, 0.3) 100%);
+  backdrop-filter: blur(20px);
+  border-bottom: 2px solid rgba(0, 153, 255, 0.4);
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  position: relative;
+}
+
+.nav-tab {
+  padding: 12px 30px;
+  background: rgba(0, 153, 255, 0.1);
+  border: 2px solid rgba(0, 153, 255, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.nav-tab:hover {
+  background: rgba(0, 153, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.nav-tab.active {
+  background: linear-gradient(135deg, rgba(0, 153, 255, 0.4) 0%, rgba(0, 102, 204, 0.5) 100%);
+  border-color: rgba(0, 153, 255, 0.6);
+  color: #0099FF;
+  box-shadow: 0 4px 12px rgba(0, 153, 255, 0.4);
+}
+

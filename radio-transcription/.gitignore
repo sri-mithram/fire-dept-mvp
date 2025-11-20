@@ -1,0 +1,75 @@
+# Environment
+
+.env
+
+.env.local
+
+*.env
+
+
+
+# Python
+
+__pycache__/
+
+*.py[cod]
+
+*$py.class
+
+*.so
+
+.Python
+
+venv/
+
+env/
+
+ENV/
+
+
+
+# Data files (don't commit transcripts)
+
+data/
+
+*.wav
+
+*.mp3
+
+*.m4a
+
+*.json
+
+*.jsonl
+
+*.log
+
+
+
+# IDE
+
+.vscode/
+
+.idea/
+
+*.swp
+
+*.swo
+
+.DS_Store
+
+
+
+# Jupyter
+
+.ipynb_checkpoints/
+
+
+
+# Distribution
+
+dist/
+
+build/
+
+*.egg-info/

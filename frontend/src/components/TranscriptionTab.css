@@ -1,0 +1,43 @@
+.transcription-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.transcription-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-align: center;
+  color: #0099FF;
+  text-shadow: 0 2px 10px rgba(0, 153, 255, 0.5);
+}
+
+.controls-section {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.transcript-section {
+  flex: 1;
+  min-height: 300px;
+}
+

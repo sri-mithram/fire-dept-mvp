@@ -1,0 +1,77 @@
+.backend-control-panel {
+  margin: 20px;
+  padding: 20px;
+  background: rgba(0, 153, 255, 0.1);
+  border-radius: 10px;
+  border: 2px solid rgba(0, 153, 255, 0.3);
+  text-align: center;
+}
+
+.backend-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.status-indicator {
+  font-size: 24px;
+}
+
+.status-ready {
+  color: #00ff00;
+}
+
+.status-starting {
+  color: #ffaa00;
+}
+
+.status-stopped {
+  color: #ff4444;
+}
+
+.status-error {
+  color: #ffaa00;
+}
+
+.status-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.start-backend-btn {
+  padding: 12px 30px;
+  background: linear-gradient(135deg, rgba(0, 153, 255, 0.4) 0%, rgba(0, 102, 204, 0.5) 100%);
+  border: 2px solid rgba(0, 153, 255, 0.6);
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.start-backend-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(0, 153, 255, 0.5) 0%, rgba(0, 102, 204, 0.6) 100%);
+  transform: translateY(-2px);
+}
+
+.start-backend-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.control-server-hint {
+  margin-top: 15px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.control-server-hint code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+}
+

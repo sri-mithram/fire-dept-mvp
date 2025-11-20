@@ -1,0 +1,83 @@
+.live-mic-controls {
+  padding: 20px;
+  background: rgba(0, 153, 255, 0.1);
+  border-radius: 12px;
+  border: 2px solid rgba(0, 153, 255, 0.3);
+  min-width: 300px;
+}
+
+.live-mic-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.live-mic-header h3 {
+  font-size: 18px;
+  color: #0099FF;
+  margin: 0;
+}
+
+.status-indicator {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.status-indicator.recording {
+  color: #ff4444;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.live-mic-status {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+.live-mic-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.start-btn, .stop-btn {
+  padding: 12px 30px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  border: none;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, rgba(0, 153, 255, 0.3) 0%, rgba(0, 102, 204, 0.4) 100%);
+  border: 2px solid rgba(0, 153, 255, 0.5);
+}
+
+.start-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 153, 255, 0.4) 0%, rgba(0, 102, 204, 0.5) 100%);
+  transform: translateY(-2px);
+}
+
+.stop-btn {
+  background: linear-gradient(135deg, rgba(200, 0, 0, 0.3) 0%, rgba(150, 0, 0, 0.4) 100%);
+  border: 2px solid rgba(200, 0, 0, 0.5);
+}
+
+.stop-btn:hover {
+  background: linear-gradient(135deg, rgba(200, 0, 0, 0.4) 0%, rgba(150, 0, 0, 0.5) 100%);
+  transform: translateY(-2px);
+}
+
