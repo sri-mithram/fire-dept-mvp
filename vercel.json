@@ -11,3 +11,11 @@
   ]
 }
 
+// NOTE: This is for FRONTEND ONLY
+// Backend (Python FastAPI) should be deployed separately to:
+// - Railway (recommended): https://railway.app
+// - Render: https://render.com
+// - Or any Python hosting service
+//
+// After deploying backend, set VITE_API_BASE_URL in Vercel environment variables
+

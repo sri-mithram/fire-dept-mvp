@@ -50,7 +50,7 @@ CORS_ORIGINS=https://your-frontend-url.com
    
    **Note:** If your default branch is `main` instead of `master`, use `main` instead.
 
-2. **Deploy to Vercel:**
+2. **Deploy to Vercel (FRONTEND ONLY):**
    - Go to [vercel.com](https://vercel.com)
    - Sign up with GitHub
    - Click "New Project"
@@ -59,6 +59,7 @@ CORS_ORIGINS=https://your-frontend-url.com
    - **Framework Preset**: Vite (auto-detected)
    - **Build Command**: Leave as auto (or set to `npm run build`)
    - **Output Directory**: Leave as auto (or set to `dist`)
+   - **⚠️ NOTE: Vercel is for FRONTEND ONLY. Backend runs separately on Railway/Render.**
    - Click "Deploy"
    
    **To set Root Directory after deployment:**
@@ -90,7 +91,11 @@ CORS_ORIGINS=https://your-frontend-url.com
 2. **Settings → Environment Variables**
 3. **Add:**
    - `VITE_API_BASE_URL` = `https://your-backend.railway.app` (from Step 2)
+   - (Optional) `VITE_GOOGLE_MAPS_API_KEY` = `your-google-maps-key`
+   - (Optional) `VITE_ONEGEO_API_KEY` = `your-onegeo-key`
 4. **Redeploy** (automatic or click "Redeploy")
+
+**⚠️ Important**: Vercel only hosts the frontend. The backend runs separately on Railway.
 
 ### Done! 🎉
 
