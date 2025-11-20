@@ -15,8 +15,11 @@ build/
 # Environment
 .env
 .env.local
+.env.production
 radio-transcription/.env
+frontend/.env
 frontend/.env.local
+frontend/.env.production
 
 # Node
 node_modules/

@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
+import { loadGoogleMaps } from '../utils/loadGoogleMaps'
 import './TrackingTab.css'
 
 // Note: Google Maps API should be loaded in index.html
-// ONEGEO_API_KEY should be in environment variables
+// API keys should be set via environment variables
 
-const ONEGEO_API_KEY = import.meta.env.VITE_ONEGEO_API_KEY || '9d89v7de8unauf9f'
-const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyA9T-CN7O0wcnBcvo9Go9HuSxia_U1QdEA'
+const ONEGEO_API_KEY = import.meta.env.VITE_ONEGEO_API_KEY
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 
 export default function TrackingTab() {
   const canvasRef = useRef(null)
@@ -282,8 +283,11 @@ export default function TrackingTab() {
     
     setIsLoading(true)
     try {
+      // Load Google Maps API if not already loaded
+      await loadGoogleMaps()
+      
       if (!window.google || !window.google.maps) {
-        throw new Error('Google Maps API not loaded')
+        throw new Error('Google Maps API not loaded. Please set VITE_GOOGLE_MAPS_API_KEY environment variable.')
       }
 
       const { Geocoder } = await window.google.maps.importLibrary("geocoding")
@@ -334,6 +338,11 @@ export default function TrackingTab() {
   }
 
   async function getONEGEOBuildingData(lat, lng, address) {
+    if (!ONEGEO_API_KEY) {
+      console.warn('ONEGEO API key not configured. Set VITE_ONEGEO_API_KEY environment variable.')
+      return null
+    }
+    
     try {
       const bboxSize = 0.002
       const west = lng - bboxSize
@@ -347,7 +356,7 @@ export default function TrackingTab() {
       
       if (!response.ok) {
         if (response.status === 401) {
-          console.warn('ONEGEO API key not configured')
+          console.warn('ONEGEO API key invalid or expired')
           return null
         }
         return null
@@ -589,12 +598,33 @@ export default function TrackingTab() {
   async function loadStreetView() {
     if (!currentLocation || !currentAddress) return
     
-    if (!window.google || !window.google.maps) {
-      console.error('Google Maps API not loaded')
-      return
+    try {
+      // Load Google Maps API if not already loaded
+      await loadGoogleMaps()
+      
+      if (!window.google || !window.google.maps) {
+        console.error('Google Maps API not loaded. Please set VITE_GOOGLE_MAPS_API_KEY environment variable.')
+        return
+      }
+      
+      // Initialize Street View
+      const { StreetViewPanorama } = await window.google.maps.importLibrary("streetView")
+      const streetViewContainer = document.getElementById('street-view')
+      
+      if (streetViewContainer && !streetViewContainer.hasChildNodes()) {
+        const location = new window.google.maps.LatLng(currentLocation.lat, currentLocation.lng)
+        const panorama = new StreetViewPanorama(streetViewContainer, {
+          position: location,
+          pov: { heading: 0, pitch: 0 },
+          zoom: 1
+        })
+      }
+      
+      setShowStreetView(true)
+    } catch (error) {
+      console.error('Error loading Street View:', error)
+      alert('Failed to load Street View. Please check your Google Maps API key.')
     }
-    
-    setShowStreetView(true)
   }
 
   return (

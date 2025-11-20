@@ -22,12 +22,16 @@ Get your key from: https://platform.openai.com/api-keys
 **Frontend** - Set in your deployment platform:
 ```
 VITE_API_BASE_URL=https://your-backend-url.com
+VITE_GOOGLE_MAPS_API_KEY=your-google-maps-key (for Tracking tab)
+VITE_ONEGEO_API_KEY=your-onegeo-key (for enhanced building data)
 ```
 
 **Backend** - Set in your deployment platform:
 ```
 CORS_ORIGINS=https://your-frontend-url.com
 ```
+
+**Note**: Frontend API keys (VITE_*) are exposed in the browser. Use API key restrictions in Google Cloud Console for security.
 
 ---
 
