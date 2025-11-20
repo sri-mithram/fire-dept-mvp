@@ -51,10 +51,14 @@ CORS_ORIGINS=https://your-frontend-url.com
    - Sign up with GitHub
    - Click "New Project"
    - Import your repository
-   - **Root Directory**: `frontend`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
+   - **Root Directory**: Leave empty (root of repo)
+   - **Framework Preset**: Vite (auto-detected)
+   - **Build Command**: `cd frontend && npm install && npm run build` (or leave auto)
+   - **Output Directory**: `frontend/dist`
+   - **Install Command**: `cd frontend && npm install` (or leave auto)
    - Click "Deploy"
+   
+   **Note:** The `vercel.json` file in the repo should auto-configure this, but you can verify these settings.
 
 3. **Note your frontend URL** (e.g., `https://fire-dept-mvp.vercel.app`)
 
